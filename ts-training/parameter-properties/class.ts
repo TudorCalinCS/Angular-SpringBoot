@@ -1,6 +1,6 @@
-class testCustomer{
+class testCustomer {
 
-    constructor(private _firstName: string, private _lastName: string){
+    constructor(private _firstName: string, private _lastName: string) {
     }
 
     public get firstName(): string {
@@ -20,6 +20,6 @@ class testCustomer{
 
 }
 
-let test_customer = new testCustomer("fName","lName");
+let test_customer = new testCustomer("fName", "lName");
 
-console.log(test_customer.firstName+" "+test_customer.lastName);
+console.log(test_customer.firstName + " " + test_customer.lastName);

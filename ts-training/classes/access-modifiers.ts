@@ -1,8 +1,8 @@
-class Customer{
+class Customer {
     private _firstName: string;
     private _lastName: string;
-   
-    constructor(paramFirst: string, paramLast: string){
+
+    constructor(paramFirst: string, paramLast: string) {
         this._firstName = paramFirst;
         this._lastName = paramLast;
     }
@@ -24,6 +24,6 @@ class Customer{
 
 }
 
-let customer = new Customer("fName","lName");
+let customer = new Customer("fName", "lName");
 
-console.log(customer.firstName+" "+customer.lastName);
+console.log(customer.firstName + " " + customer.lastName);

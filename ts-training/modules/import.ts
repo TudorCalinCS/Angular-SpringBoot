@@ -1,4 +1,4 @@
-import { Person } from "./super";
+import { Person } from "./export";
 
 let person = new Person("fName", "lName");
 
