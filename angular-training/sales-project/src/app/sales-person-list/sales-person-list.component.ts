@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-sales-person-list',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './sales-person-list.component.html',
+  templateUrl: './sales-person-list-boostrap.component.html',
   styleUrl: './sales-person-list.component.css'
 })
 export class SalesPersonListComponent implements OnInit{
