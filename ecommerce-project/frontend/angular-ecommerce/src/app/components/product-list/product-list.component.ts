@@ -10,10 +10,11 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './product-list-grid.component.html',
   styleUrl: './product-list.component.css'
 })
-export class ProductListComponent implements OnInit{
+export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
   currentCategoryId!: number;
+  searchMode: boolean = false;
 
   constructor(private productService: ProductService,
     private route: ActivatedRoute
@@ -27,7 +28,29 @@ export class ProductListComponent implements OnInit{
   }
 
   listProducts() {
+    this.searchMode = this.route.snapshot.paramMap.has('keyword');
+    console.log(`In search mode ${this.searchMode}`);
+    if (this.searchMode) {
+      this.handleSearchProducts();
+    }
+    else {
+      this.handleListProducts();
+    }
+  }
 
+  handleSearchProducts() {
+
+    const keywordParam = this.route.snapshot.paramMap.get('keyword');
+    const theKeyword: string = keywordParam !== null ? keywordParam : '';
+    console.log(`the keyword: ${theKeyword}`);
+    this.productService.searchProducts(theKeyword).subscribe(
+      data => {
+        this.products = data;
+      }
+    );
+  }
+
+  handleListProducts() {
     const hasCategoryId: boolean = this.route.snapshot.paramMap.has('id');
     console.log('Has Category ID:', hasCategoryId);  // Debugging
 
@@ -37,7 +60,7 @@ export class ProductListComponent implements OnInit{
       console.log('Current Category ID:', this.currentCategoryId);  // Debugging
 
     }
-    else{
+    else {
       // not available, use default category
       this.currentCategoryId = 1;
       console.log('Default Category ID:', this.currentCategoryId);  // Debugging
@@ -49,5 +72,5 @@ export class ProductListComponent implements OnInit{
         this.products = data;
       }
     )
-  };
+  }
 }
