@@ -84,7 +84,9 @@ h6{
 }
 
 a{
-    display:inline-block
+    display:inline-block;
+    color: red; /* Make links stand out */
+    text-decoration: underline; /* Ensure visibility */
 }
 
 a:active,a:focus,a:hover{
@@ -752,6 +754,7 @@ a.primary-btn:hover{
 
 .active-link {
   font-weight: bold;
+  color: #007bff;
 }
 
 /* 
