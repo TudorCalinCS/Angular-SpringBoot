@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Product } from '../common/product';
 import { map } from 'rxjs/operators';
+import { ProductCategory } from '../common/product-category';
 
 @Injectable({
   providedIn: 'root'
@@ -11,22 +12,38 @@ export class ProductService {
 
   private baseUrl = 'http://localhost:8080/api/products';
 
-  constructor(private httpClient: HttpClient) {}
+  private categoryUrl = 'http://localhost:8080/api/product-category';
+ 
+  constructor(private httpClient: HttpClient) { }
 
-  getProductList(categoryId :number): Observable<Product[]> {
-
-    // build url based on categoryId in springboot
+  getProductList(categoryId: number): Observable<Product[]> {
 
     const searchUrl = `${this.baseUrl}/search/findByCategoryId?id=${categoryId}`;
-    
-    return this.httpClient.get<GetResponse>(searchUrl).pipe(
+
+    return this.httpClient.get<GetResponseProducts>(searchUrl).pipe(
+      // map the JSON data from Spring Data REST to Products array
       map(response => response._embedded.products)
     );
-  }  
+  }
+  getProductCategories(): Observable<ProductCategory[]> {
+
+    return this.httpClient.get<GetResponseProductCategory>(this.categoryUrl).pipe(
+      // map the JSON data from Spring Data REST to ProductCategory array
+      map(response => response._embedded.productCategory)
+    );
+  }
 }
 
-interface GetResponse {
+interface GetResponseProducts {
+  // unwrap the JSON
   _embedded: {
     products: Product[];
+  };
+}
+
+interface GetResponseProductCategory {
+  // unwrap the JSON
+  _embedded: {
+    productCategory: ProductCategory[];
   };
 }
