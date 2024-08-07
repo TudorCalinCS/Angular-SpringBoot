@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { RouterModule, Routes } from '@angular/router';
 import { routes } from './app.routes';
-
+import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -19,6 +19,7 @@ import { routes } from './app.routes';
     RouterModule.forRoot(routes),
     BrowserModule,
     CommonModule,
+    NgbModule
   ],
   providers: [
     provideHttpClient(),
