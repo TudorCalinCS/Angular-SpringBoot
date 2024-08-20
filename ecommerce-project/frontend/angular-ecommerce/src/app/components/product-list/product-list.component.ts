@@ -3,18 +3,27 @@ import { ProductService } from '../../services/product.service';
 import { Product } from '../../common/product';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
+import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule,RouterModule],
+  imports: [CommonModule, RouterModule,NgbPagination],
   templateUrl: './product-list-grid.component.html',
   styleUrl: './product-list.component.css'
 })
 export class ProductListComponent implements OnInit {
 
   products: Product[] = [];
-  currentCategoryId!: number;
+  currentCategoryId: number = 1;
+  previousCategoryId: number = 1;
   searchMode: boolean = false;
+
+  // new properties for pagination
+
+  thePageNumber: number = 1;
+  thePageSize: number = 50;
+  theTotalElements: number = 0;
+
 
   constructor(private productService: ProductService,
     private route: ActivatedRoute
@@ -66,11 +75,28 @@ export class ProductListComponent implements OnInit {
       console.log('Default Category ID:', this.currentCategoryId);  // Debugging
 
     }
+    // check if we have a different category than previous
+    // reset page number if different category
+    if (this.previousCategoryId != this.currentCategoryId) {
+      this.thePageNumber = 1;
+    }
 
-    this.productService.getProductList(this.currentCategoryId).subscribe(
-      data => {
-        this.products = data;
-      }
-    )
+    this.previousCategoryId=this.currentCategoryId;
+    console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
+
+    // -1 because angular -> pages are 1 based, spring data rest -> pages are 0 based
+    this.productService.getProductListPaginate(this.thePageNumber-1, 
+                                               this.thePageSize,
+                                               this.currentCategoryId)
+                                               .subscribe(this.processResult());
+    }
+
+    processResult() {
+      return (data: { _embedded: { products: Product[]; }; page: { number: number; size: number; totalElements: number; }; }) => {
+        this.products = data._embedded.products;
+        this.thePageNumber = data.page.number + 1;
+        this.thePageSize = data.page.size;
+        this.theTotalElements = data.page.totalElements;
+      };
   }
 }
