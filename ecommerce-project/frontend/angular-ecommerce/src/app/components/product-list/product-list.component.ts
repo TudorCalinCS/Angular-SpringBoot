@@ -7,7 +7,7 @@ import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterModule,NgbPagination],
+  imports: [CommonModule, RouterModule, NgbPagination],
   templateUrl: './product-list-grid.component.html',
   styleUrl: './product-list.component.css'
 })
@@ -55,7 +55,7 @@ export class ProductListComponent implements OnInit {
 
     // if different keyword, set thePageNumber to 1
 
-    if(this.previousKeyword != theKeyword){
+    if (this.previousKeyword != theKeyword) {
       this.thePageNumber = 1;
     }
 
@@ -64,8 +64,8 @@ export class ProductListComponent implements OnInit {
     console.log(`The keyword: ${theKeyword}, thePageNumber = ${this.thePageNumber}`);
 
     this.productService.searchProductsPaginate(this.thePageNumber - 1,
-                                               this.thePageSize,
-                                               theKeyword).subscribe(this.processResult());
+      this.thePageSize,
+      theKeyword).subscribe(this.processResult());
   }
 
   handleListProducts() {
@@ -90,30 +90,34 @@ export class ProductListComponent implements OnInit {
       this.thePageNumber = 1;
     }
 
-    this.previousCategoryId=this.currentCategoryId;
+    this.previousCategoryId = this.currentCategoryId;
     console.log(`currentCategoryId=${this.currentCategoryId}, thePageNumber=${this.thePageNumber}`);
 
     // -1 because angular -> pages are 1 based, spring data rest -> pages are 0 based
-    this.productService.getProductListPaginate(this.thePageNumber-1, 
-                                               this.thePageSize,
-                                               this.currentCategoryId)
-                                               .subscribe(this.processResult());
-    }
+    this.productService.getProductListPaginate(this.thePageNumber - 1,
+      this.thePageSize,
+      this.currentCategoryId)
+      .subscribe(this.processResult());
+  }
 
-    processResult() {
-      return (data: { _embedded: { products: Product[]; }; page: { number: number; size: number; totalElements: number; }; }) => {
-        this.products = data._embedded.products;
-        this.thePageNumber = data.page.number + 1;
-        this.thePageSize = data.page.size;
-        this.theTotalElements = data.page.totalElements;
-      };
+  processResult() {
+    return (data: { _embedded: { products: Product[]; }; page: { number: number; size: number; totalElements: number; }; }) => {
+      this.products = data._embedded.products;
+      this.thePageNumber = data.page.number + 1;
+      this.thePageSize = data.page.size;
+      this.theTotalElements = data.page.totalElements;
+    };
   }
 
   updatePageSize(event: Event) {
     const selectElement = event.target as HTMLSelectElement;
-    const pageSize = +selectElement.value; 
+    const pageSize = +selectElement.value;
     this.thePageSize = pageSize;
     this.thePageNumber = 1;
     this.listProducts();
+  }
+
+  addToCart(theProduct: Product){
+    console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`)
   }
 }
