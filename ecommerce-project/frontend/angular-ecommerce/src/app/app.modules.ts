@@ -8,6 +8,7 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { RouterModule, Routes } from '@angular/router';
 import { routes } from './app.routes';
 import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { NgbModule} from '@ng-bootstrap/ng-bootstrap';
     RouterModule.forRoot(routes),
     BrowserModule,
     CommonModule,
-    NgbModule
+    NgbModule,
+    ReactiveFormsModule
   ],
   providers: [
     provideHttpClient(),
