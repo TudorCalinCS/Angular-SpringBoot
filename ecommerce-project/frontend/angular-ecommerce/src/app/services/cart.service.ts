@@ -23,16 +23,13 @@ export class CartService {
 
     if (this.cartItems.length > 0) {
 
-      for (let cartItem of this.cartItems) {
-        if (cartItem.id === theCatItem.id) {
-          existingCartItem = cartItem;
-          break;
-        }
-      }
+      existingCartItem = this.cartItems.find(tempItem => tempItem.id === theCatItem.id)!;
+
+      // check if we found the item in cart
+      alreadyInCart = (existingCartItem != undefined);
     }
 
-    // check if we found the item in cart
-    alreadyInCart = (existingCartItem != undefined);
+
 
     if (alreadyInCart) {
       // already in cart, increase quantity
@@ -60,7 +57,7 @@ export class CartService {
     this.totalQuantity.next(totalQuantityValue);
 
     console.log(`totalPrice: ${totalPriceValue}, totalQuantity: ${totalQuantityValue}`);
-  
+
   };
 }
 
