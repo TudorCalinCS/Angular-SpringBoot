@@ -10,18 +10,18 @@ import { CommonModule } from '@angular/common';
   templateUrl: './cart-details.component.html',
   styleUrl: './cart-details.component.css'
 })
-export class CartDetailsComponent implements OnInit{
+export class CartDetailsComponent implements OnInit {
 
   cartItems: CartItem[] = [];
   totalPrice: number = 0;
   totalQuantity: number = 0;
-  
-  constructor(private cartService: CartService){}
+
+  constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
     this.listCartDetails();
   }
-  
+
   listCartDetails() {
     this.cartItems = this.cartService.cartItems;
 
@@ -35,4 +35,17 @@ export class CartDetailsComponent implements OnInit{
 
     this.cartService.computeCartTotals();
   }
+
+  incrementQuantity(cartItem: CartItem) {
+    this.cartService.addToCart(cartItem);
+  }
+
+  decrementQuantity(cartItem: CartItem) {
+    this.cartService.decrementQuantity(cartItem);
+  }
+
+  remove(cartItem: CartItem) {
+    this.cartService.remove(cartItem);
+  }
+    
 }
