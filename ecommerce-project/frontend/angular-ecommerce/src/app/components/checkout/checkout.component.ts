@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormService } from '../../services/form.service';
+import { CustomValidators } from '../../validators/custom-validators';
 
 @Component({
   selector: 'app-checkout',
@@ -24,9 +25,10 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     this.checkoutFromGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
-        firstName: [''],
-        lastName: [''],
-        email: ['']
+        firstName: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.checkBlanksValidation]),
+        lastName: new FormControl('', [Validators.required, Validators.minLength(2), CustomValidators.checkBlanksValidation]),
+        email: new FormControl('',
+          [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group({
         street: [''],
@@ -68,6 +70,10 @@ export class CheckoutComponent implements OnInit {
     )
   }
 
+  get firstName() { return this.checkoutFromGroup.get('customer.firstName'); }
+  get lastName() { return this.checkoutFromGroup.get('customer.lastName'); }
+  get email() { return this.checkoutFromGroup.get('customer.email'); }
+
   mirrorShipping($event: Event) {
 
     const target = $event.target as HTMLInputElement | null;
@@ -82,7 +88,12 @@ export class CheckoutComponent implements OnInit {
   onSubmit() {
 
     console.log("Handling the submit button");
-    console.log(this.checkoutFromGroup.get('customer')?.value);
+    
+    if(this.checkoutFromGroup.invalid){
+      this.checkoutFromGroup.markAllAsTouched();
+    }
+
+    //console.log(this.checkoutFromGroup.get('customer')?.value);
   }
 
   handleMonthsYears() {
