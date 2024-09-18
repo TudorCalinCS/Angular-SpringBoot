@@ -4,6 +4,8 @@ import { Product } from '../../common/product';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
 import { NgbPagination } from '@ng-bootstrap/ng-bootstrap';
+import { CartItem } from '../../common/cart-item';
+import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-product-list',
   standalone: true,
@@ -27,6 +29,7 @@ export class ProductListComponent implements OnInit {
   previousKeyword: string = "";
 
   constructor(private productService: ProductService,
+    private cartService: CartService,
     private route: ActivatedRoute
   ) { }
 
@@ -117,7 +120,11 @@ export class ProductListComponent implements OnInit {
     this.listProducts();
   }
 
-  addToCart(theProduct: Product){
-    console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`)
+  addToCart(theProduct: Product) {
+    console.log(`Adding to cart: ${theProduct.name}, ${theProduct.unitPrice}`);
+
+    const theCartItem = new CartItem(theProduct);
+
+    this.cartService.addToCart(theCartItem);
   }
 }
