@@ -48,7 +48,7 @@ export class CheckoutComponent implements OnInit {
       creditCard: this.formBuilder.group({
         cardType: new FormControl('', [Validators.required]),
         nameOnCard: new FormControl('', [Validators.required, Validators.minLength(2)]),
-        cardNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{16}$')]), 
+        cardNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{16}$')]),
         securityCode: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{3,4}$')]),
         expirationMonth: new FormControl('', [Validators.required]),
         expirationYear: new FormControl('', [Validators.required])
@@ -73,21 +73,22 @@ export class CheckoutComponent implements OnInit {
   get firstName() { return this.checkoutFromGroup.get('customer.firstName'); }
   get lastName() { return this.checkoutFromGroup.get('customer.lastName'); }
   get email() { return this.checkoutFromGroup.get('customer.email'); }
-  get street() {return this.checkoutFromGroup.get('shippingAddress.street')}
-  get country() {return this.checkoutFromGroup.get('shippingAddress.country')}
-  get state() {return this.checkoutFromGroup.get('shippingAddress.state')}
-  get zipCode() {return this.checkoutFromGroup.get('shippingAddress.zipCode')}
-  get city() {return this.checkoutFromGroup.get('shippingAddress.city')}
-  get nameOnCard(){return this.checkoutFromGroup.get('creditCard.nameOnCard')}
-  get cardNumber(){return this.checkoutFromGroup.get('creditCard.cardNumber')}
-  get securityCode(){return this.checkoutFromGroup.get('creditCard.securityCode')}
-  get cardType(){return this.checkoutFromGroup.get('creditCard.cardType')}
-  get expirationMonth(){return this.checkoutFromGroup.get('creditCard.expirationMonth')}
-  get expirationYear(){return this.checkoutFromGroup.get('creditCard.expirationYear')}
-
-  
-
-
+  get street() { return this.checkoutFromGroup.get('shippingAddress.street') }
+  get country() { return this.checkoutFromGroup.get('shippingAddress.country') }
+  get state() { return this.checkoutFromGroup.get('shippingAddress.state') }
+  get zipCode() { return this.checkoutFromGroup.get('shippingAddress.zipCode') }
+  get city() { return this.checkoutFromGroup.get('shippingAddress.city') }
+  get nameOnCard() { return this.checkoutFromGroup.get('creditCard.nameOnCard') }
+  get cardNumber() { return this.checkoutFromGroup.get('creditCard.cardNumber') }
+  get securityCode() { return this.checkoutFromGroup.get('creditCard.securityCode') }
+  get cardType() { return this.checkoutFromGroup.get('creditCard.cardType') }
+  get expirationMonth() { return this.checkoutFromGroup.get('creditCard.expirationMonth') }
+  get expirationYear() { return this.checkoutFromGroup.get('creditCard.expirationYear') }
+  get bstreet() { return this.checkoutFromGroup.get('billingAddress.street') }
+  get bcountry() { return this.checkoutFromGroup.get('billingAddress.country') }
+  get bstate() { return this.checkoutFromGroup.get('billingAddress.state') }
+  get bzipCode() { return this.checkoutFromGroup.get('billingAddress.zipCode') }
+  get bcity() { return this.checkoutFromGroup.get('billingAddress.city') }
 
 
 
@@ -106,12 +107,15 @@ export class CheckoutComponent implements OnInit {
 
     console.log("Handling the submit button");
 
+    this.checkoutFromGroup.updateValueAndValidity();
+
     if (this.checkoutFromGroup.invalid) {
       this.checkoutFromGroup.markAllAsTouched();
-      return;
-    }
-    this.router.navigateByUrl('/purchase');
 
+    }
+    else {
+      this.router.navigateByUrl('/purchase');
+    }
   }
 
   handleMonthsYears() {
