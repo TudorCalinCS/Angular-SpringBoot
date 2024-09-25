@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { FormService } from '../../services/form.service';
 import { CustomValidators } from '../../validators/custom-validators';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -20,7 +21,7 @@ export class CheckoutComponent implements OnInit {
 
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
-  constructor(private formBuilder: FormBuilder, private formService: FormService) { }
+  constructor(private formBuilder: FormBuilder, private formService: FormService, private router: Router) { }
 
   ngOnInit(): void {
     this.checkoutFromGroup = this.formBuilder.group({
@@ -88,12 +89,13 @@ export class CheckoutComponent implements OnInit {
   onSubmit() {
 
     console.log("Handling the submit button");
-    
-    if(this.checkoutFromGroup.invalid){
-      this.checkoutFromGroup.markAllAsTouched();
-    }
 
-    //console.log(this.checkoutFromGroup.get('customer')?.value);
+    if (this.checkoutFromGroup.invalid) {
+      this.checkoutFromGroup.markAllAsTouched();
+      return;
+    }
+    this.router.navigateByUrl('/purchase');
+
   }
 
   handleMonthsYears() {

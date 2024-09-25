@@ -3,8 +3,10 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { CartDetailsComponent } from './components/cart-details/cart-details.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
+import { PurchaseComponent } from './components/purchase/purchase.component';
 
 export const routes: Routes = [
+    { path: 'purchase', component: PurchaseComponent },
     { path: 'checkout', component: CheckoutComponent },
     { path: 'cart-details', component: CartDetailsComponent },
     { path: 'products/:id', component: ProductDetailsComponent },
