@@ -32,29 +32,28 @@ export class CheckoutComponent implements OnInit {
           [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$')])
       }),
       shippingAddress: this.formBuilder.group({
-        street: [''],
-        city: [''],
-        state: [''],
-        country: [''],
-        zipCode: [''],
+        street: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        city: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        state: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('', [Validators.required])
       }),
       billingAddress: this.formBuilder.group({
-        street: [''],
-        city: [''],
-        state: [''],
-        country: [''],
-        zipCode: [''],
+        street: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        city: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        state: new FormControl('', [Validators.required]),
+        country: new FormControl('', [Validators.required]),
+        zipCode: new FormControl('', [Validators.required])
       }),
       creditCard: this.formBuilder.group({
-        cardType: [''],
-        nameOnCard: [''],
-        cardNumber: [''],
-        securityCode: [''],
-        expirationMonth: [''],
-        expirationYear: [''],
+        cardType: new FormControl('', [Validators.required]),
+        nameOnCard: new FormControl('', [Validators.required, Validators.minLength(2)]),
+        cardNumber: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{16}$')]), 
+        securityCode: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{3,4}$')]),
+        expirationMonth: new FormControl('', [Validators.required]),
+        expirationYear: new FormControl('', [Validators.required])
       }),
     });
-
     // populate credit card data
     const startMonth: number = new Date().getMonth() + 1;
 
@@ -74,6 +73,23 @@ export class CheckoutComponent implements OnInit {
   get firstName() { return this.checkoutFromGroup.get('customer.firstName'); }
   get lastName() { return this.checkoutFromGroup.get('customer.lastName'); }
   get email() { return this.checkoutFromGroup.get('customer.email'); }
+  get street() {return this.checkoutFromGroup.get('shippingAddress.street')}
+  get country() {return this.checkoutFromGroup.get('shippingAddress.country')}
+  get state() {return this.checkoutFromGroup.get('shippingAddress.state')}
+  get zipCode() {return this.checkoutFromGroup.get('shippingAddress.zipCode')}
+  get city() {return this.checkoutFromGroup.get('shippingAddress.city')}
+  get nameOnCard(){return this.checkoutFromGroup.get('creditCard.nameOnCard')}
+  get cardNumber(){return this.checkoutFromGroup.get('creditCard.cardNumber')}
+  get securityCode(){return this.checkoutFromGroup.get('creditCard.securityCode')}
+  get cardType(){return this.checkoutFromGroup.get('creditCard.cardType')}
+  get expirationMonth(){return this.checkoutFromGroup.get('creditCard.expirationMonth')}
+  get expirationYear(){return this.checkoutFromGroup.get('creditCard.expirationYear')}
+
+  
+
+
+
+
 
   mirrorShipping($event: Event) {
 
