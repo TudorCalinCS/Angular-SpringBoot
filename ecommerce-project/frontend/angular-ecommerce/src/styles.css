@@ -3,7 +3,21 @@
  * Common CSS
  * ----------------------------
  */
+ .btn {
+    padding: 10px 20px; /* Adjust the padding for larger buttons */
+    font-size: 14px;    /* Increase the font size */
+  }
+  
 
+  
+  .items .row {
+    margin-bottom: 10px; /* Add margin between the rows */
+  }
+  
+  .col.ml-4.mr-4 {
+    margin: 0 10px;  /* Increase margin between the quantity and buttons */
+  }
+  
  *{
     margin:0;
     padding:0;
@@ -121,7 +135,14 @@ a,a:hover{
     padding-top:116px;
     min-height:100vh
 }
+.checkout-content{
+    padding-top:116px;
+    min-height:100vh;
+    justify-content: center;
+    align-items: center;
+   
 
+}
 aside.menu-sidebar.d-none.d-lg-block.clr{
     background:0 0;
     z-index:99999999;
