@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { FormService } from '../../services/form.service';
 import { CustomValidators } from '../../validators/custom-validators';
 import { Router, RouterLink } from '@angular/router';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-checkout',
@@ -21,7 +22,7 @@ export class CheckoutComponent implements OnInit {
 
   creditCardYears: number[] = [];
   creditCardMonths: number[] = [];
-  constructor(private formBuilder: FormBuilder, private formService: FormService, private router: Router) { }
+  constructor(private formBuilder: FormBuilder, private formService: FormService, private router: Router, private cartService: CartService) { }
 
   ngOnInit(): void {
     this.checkoutFromGroup = this.formBuilder.group({
@@ -53,7 +54,10 @@ export class CheckoutComponent implements OnInit {
         expirationMonth: new FormControl('', [Validators.required]),
         expirationYear: new FormControl('', [Validators.required])
       }),
-    });
+
+
+    }
+    );
     // populate credit card data
     const startMonth: number = new Date().getMonth() + 1;
 
@@ -68,6 +72,17 @@ export class CheckoutComponent implements OnInit {
         this.creditCardYears = data;
       }
     )
+
+    this.cartService.totalPrice.subscribe(
+      data => this.totalPrice = data
+    )
+
+    this.cartService.totalQuantity.subscribe(
+      data => this.totalQuantity = data
+    )
+
+    this.cartService.computeCartTotals();
+
   }
 
   get firstName() { return this.checkoutFromGroup.get('customer.firstName'); }
