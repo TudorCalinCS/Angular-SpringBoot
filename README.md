@@ -43,4 +43,7 @@ This project is a full-stack e-commerce application developed using Angular for 
 
 ## Screenshots
 
-![Screenshot](path-to-screenshot.png)
+![screenshot1](https://github.com/user-attachments/assets/989f180e-0903-48f7-8c3a-e971721a4eda)
+![screenshot2](https://github.com/user-attachments/assets/da6f3c10-9893-4073-820b-c092804be5cf)
+![screenshot3](https://github.com/user-attachments/assets/18815da5-fa1e-477d-aa19-918bd629fddc)
+![screenshot4](https://github.com/user-attachments/assets/e96e9be6-69b5-463e-9881-ca9afb9ee566)
