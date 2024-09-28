@@ -1,4 +1,4 @@
-# Full Stack E-commerce Application
+# Full-stack E-commerce Application
 
 This project is a full-stack e-commerce application developed using Angular for the frontend and Spring Boot for the backend. The project allows users to browse products, add items to a shopping cart, and proceed through a checkout process with a dynamic form.
 
